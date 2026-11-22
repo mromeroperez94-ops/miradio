@@ -98,7 +98,7 @@ main{height:100%}
 .nm{flex:none;margin-top:6px;min-height:2.4em;display:flex;align-items:center;justify-content:center;font-size:12px}
 .eq{top:12px;right:12px}
 /* Volumen: solo en ordenador (ratón). En el móvil se usan los botones del iPhone, que además ignoran el volumen de la web */
-#vol{display:none;align-items:center;gap:6px;flex:none;margin-left:4px}
+#vol{display:none;align-items:center;gap:6px;flex:none;margin:0 6px 0 4px}
 @media (hover:hover) and (pointer:fine){#vol{display:flex}}
 #vmute{flex:none;width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:#fff;display:grid;place-items:center;padding:0;cursor:pointer}
 #vmute:hover{background:rgba(255,255,255,.2)}
@@ -114,10 +114,10 @@ main{height:100%}
 <div id="player">
   <span class="pav" id="pav">📻</span>
   <div class="pt"><div id="pname">Elige una emisora</div><div id="pstate">Toca una para escuchar</div></div>
+  <div id="vol"><button id="vmute" aria-label="Silenciar"><svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="currentColor" stroke="none"/><path class="vw" d="M15.5 9a4 4 0 010 6M18 6.5a8 8 0 010 11"/><path class="vx" d="M15.5 9.5l5 5M20.5 9.5l-5 5"/></svg></button><input type="range" id="vrange" min="0" max="100" step="1" value="100" aria-label="Volumen"></div>
   <button class="skip" id="prev" aria-label="Emisora anterior"><svg viewBox="0 0 24 24"><path d="M6 5h2.4v14H6zM20 5v14L9.5 12z"/></svg></button>
   <button id="play" aria-label="Reproducir o pausar"><svg viewBox="0 0 16 16"><path d="M4 2.2v11.6L13.6 8z"/></svg></button>
   <button class="skip" id="next" aria-label="Emisora siguiente"><svg viewBox="0 0 24 24"><path d="M15.6 5H18v14h-2.4zM4 5l10.5 7L4 19z"/></svg></button>
-  <div id="vol"><button id="vmute" aria-label="Silenciar"><svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="currentColor" stroke="none"/><path class="vw" d="M15.5 9a4 4 0 010 6M18 6.5a8 8 0 010 11"/><path class="vx" d="M15.5 9.5l5 5M20.5 9.5l-5 5"/></svg></button><input type="range" id="vrange" min="0" max="100" step="1" value="100" aria-label="Volumen"></div>
 </div>
 <button id="tbtn" aria-label="Temporizador de 2 horas: apagar la radio dentro de 2 horas"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg><span class="tt" id="ttxt">2 h</span></button>
 <audio id="audio" preload="none"></audio>
