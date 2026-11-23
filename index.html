@@ -259,6 +259,7 @@ function resume(){
   want=true;retries=0;ui('wait','Conectando…');start(current.url);   /* se vuelve al directo, no al punto donde se pausó */
 }
 function playStation(st){
+  if(current===st&&want&&(uiState==='wait'||uiState==='live'))return;   /* ya está conectando o sonando: no reiniciar la conexión */
   current=st;want=true;retries=0;
   $('pname').textContent=st.name;fillAv($('pav'),st);
   ui('wait','Conectando…');
@@ -353,10 +354,18 @@ audio.addEventListener('waiting',()=>{
   armStart();
 });
 audio.addEventListener('pause',()=>{
+  if(want&&uiState==='wait'){dlog('pausa del sistema mientras conecta: play otra vez');const p=audio.play();if(p&&p.catch)p.catch(e=>dlog('play rechazado: '+(e&&e.name)));return}
   if(uiState!=='live')return;
   if(audio.readyState<3){fail();return}     /* se quedó sin datos: reconectar, no es una pausa del usuario */
   want=false;ui('paused','En pausa');       /* pausa del sistema (llamada, Siri, auriculares): se respeta, no se reanuda sola */
 });
+/* Mientras se quiere sonido y el audio está parado (iOS lo pausa al pasar a segundo plano si aún estaba conectando), se insiste en reproducir en cuanto hay datos */
+function nudge(){
+  if(!want||!current||!audio.paused||uiState==='paused'||uiState==='error')return;
+  if(audio.readyState>=2){const p=audio.play();if(p&&p.catch)p.catch(e=>dlog('play rechazado: '+(e&&e.name)))}
+}
+['stalled','canplay','loadeddata','suspend'].forEach(e=>audio.addEventListener(e,nudge));
+setInterval(nudge,1000);
 audio.addEventListener('error',fail);
 audio.addEventListener('ended',fail);
 
